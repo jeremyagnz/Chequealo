@@ -1,0 +1,25 @@
+{
+  "name": "@chequealo/worker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chequealo/ai-providers": "workspace:*",
+    "@chequealo/credibility-engine": "workspace:*",
+    "@chequealo/database": "workspace:*",
+    "@chequealo/search-engine": "workspace:*",
+    "@chequealo/shared-types": "workspace:*",
+    "bullmq": "^5.7.0",
+    "ioredis": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.15.0",
+    "typescript": "^5.4.5"
+  }
+}

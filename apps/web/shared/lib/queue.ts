@@ -1,25 +1,22 @@
 import { Queue } from 'bullmq';
-import IORedis from 'ioredis';
 import type { VerificationJobPayload } from '@chequealo/shared-types';
 
-let connection: IORedis | undefined;
+type VerificationQueue = Queue<VerificationJobPayload, void, 'verify'>;
 
-function getConnection(): IORedis {
-  if (!connection) {
-    connection = new IORedis(process.env.REDIS_URL ?? 'redis://localhost:6379', {
+function createVerificationQueue(): VerificationQueue {
+  return new Queue<VerificationJobPayload, void, 'verify'>('verification', {
+    connection: {
+      url: process.env.REDIS_URL ?? 'redis://localhost:6379',
       maxRetriesPerRequest: null,
-    });
-  }
-  return connection;
+    },
+  });
 }
 
-let _verificationQueue: Queue<VerificationJobPayload> | undefined;
+let _verificationQueue: VerificationQueue | undefined;
 
-export function getVerificationQueue(): Queue<VerificationJobPayload> {
+export function getVerificationQueue(): VerificationQueue {
   if (!_verificationQueue) {
-    _verificationQueue = new Queue<VerificationJobPayload>('verification', {
-      connection: getConnection(),
-    });
+    _verificationQueue = createVerificationQueue();
   }
   return _verificationQueue;
 }

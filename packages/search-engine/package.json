@@ -8,7 +8,7 @@
     ".": "./index.ts"
   },
   "dependencies": {
-    "@chequealo/shared-types": "workspace:*"
+    "@chequealo/shared-types": "0.1.0"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

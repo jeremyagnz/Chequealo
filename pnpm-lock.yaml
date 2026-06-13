@@ -44,6 +44,9 @@ importers:
       '@chequealo/white-label':
         specifier: workspace:*
         version: link:../../packages/white-label
+      '@paralleldrive/cuid2':
+        specifier: ^2.2.2
+        version: 2.3.1
       bullmq:
         specifier: ^5.7.0
         version: 5.78.0

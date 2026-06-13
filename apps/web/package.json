@@ -13,6 +13,7 @@
     "@chequealo/ai-providers": "workspace:*",
     "@chequealo/credibility-engine": "workspace:*",
     "@chequealo/database": "workspace:*",
+    "@paralleldrive/cuid2": "^2.2.2",
     "drizzle-orm": "^0.31.0",
     "@chequealo/search-engine": "workspace:*",
     "@chequealo/shared-types": "workspace:*",

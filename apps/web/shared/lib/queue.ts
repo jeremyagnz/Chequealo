@@ -21,4 +21,4 @@ export function getVerificationQueue(): VerificationQueue {
   return _verificationQueue;
 }
 
-export const verificationQueue = getVerificationQueue();
+export const isQueueConfigured = Boolean(process.env.REDIS_URL);

@@ -24,6 +24,9 @@ function getDatabase() {
 
 export const db = new Proxy({} as ReturnType<typeof drizzle<typeof schema>>, {
   get(_target, prop, receiver) {
+    if (!isDatabaseConfigured) {
+      return undefined;
+    }
     const value = Reflect.get(getDatabase(), prop, receiver);
     return typeof value === 'function' ? value.bind(getDatabase()) : value;
   },

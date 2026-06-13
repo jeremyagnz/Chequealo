@@ -4,6 +4,8 @@ import { db, isDatabaseConfigured } from '@chequealo/database';
 import { settings } from '@chequealo/database/schema';
 import { eq } from 'drizzle-orm';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(_request: NextRequest) {
   const session = await auth();
   if (!session?.user) {

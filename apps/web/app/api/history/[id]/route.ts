@@ -4,6 +4,8 @@ import { db, isDatabaseConfigured } from '@chequealo/database';
 import { verifications } from '@chequealo/database/schema';
 import { eq, and } from 'drizzle-orm';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: { id: string } },

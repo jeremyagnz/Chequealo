@@ -1,6 +1,6 @@
 import { db } from '@chequealo/database';
 import { verifications } from '@chequealo/database/schema';
-import { verificationQueue } from '@/shared/lib/queue';
+import { getVerificationQueue } from '@/shared/lib/queue';
 import type { CreateVerificationInput, Verification } from '@chequealo/shared-types';
 import { createId } from '@paralleldrive/cuid2';
 // @paralleldrive/cuid2 is provided by @chequealo/database
@@ -17,7 +17,7 @@ export class CreateVerification {
       status: 'pending',
     });
 
-    await verificationQueue.add('verify', {
+    await getVerificationQueue().add('verify', {
       verificationId: id,
       claim: input.claim,
       tenantId: input.tenantId,

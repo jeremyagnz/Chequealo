@@ -1,0 +1,38 @@
+# ─── Netlify configuration ─────────────────────────────────────────────────
+# Deploys apps/web (Next.js 14) from the Turborepo + pnpm monorepo.
+
+[build]
+  # Run from the repo root so pnpm workspace symlinks resolve correctly.
+  base    = "."
+  command = "pnpm turbo run build --filter=@chequealo/web..."
+  publish = "apps/web/.next"
+
+[build.environment]
+  NODE_VERSION              = "20"
+  PNPM_VERSION              = "9.4.0"
+  TURBO_TELEMETRY_DISABLED  = "1"
+  # Turborepo remote cache (optional — set in Netlify UI).
+  # TURBO_TOKEN  = ""
+  # TURBO_TEAM   = ""
+
+# Next.js runtime adapter — handles SSR, ISR, image optimisation, etc.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# ─── Headers ────────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+
+# ─── Redirects ──────────────────────────────────────────────────────────────
+# Redirect bare domain to www (adjust to your domain).
+# [[redirects]]
+#   from   = "https://chequealo.ai/*"
+#   to     = "https://www.chequealo.ai/:splat"
+#   status = 301
+#   force  = true

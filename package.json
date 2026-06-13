@@ -2,28 +2,43 @@
   "name": "chequealo-ai",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "type-check": "turbo run type-check",
-    "test": "turbo run test",
-    "clean": "turbo run clean && rm -rf node_modules"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
+    "@google/generative-ai": "^0.24.1",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "bullmq": "^5.7.0",
+    "drizzle-orm": "^0.31.0",
+    "groq-sdk": "^1.2.1",
+    "next": "14.2.4",
+    "next-auth": "^5.0.0-beta.19",
+    "openai": "^6.42.0",
+    "postgres": "^3.4.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.9.1",
     "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "drizzle-kit": "^0.22.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.4",
+    "postcss": "^8.4.38",
     "prettier": "^3.3.0",
-    "turbo": "^2.0.0",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=20.0.0",
     "npm": ">=10.0.0"
-  },
-  "packageManager": "npm@11.13.0"
+  }
 }

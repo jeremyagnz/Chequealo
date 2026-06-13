@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import type { NextAuthConfig } from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
-import { db } from '@chequealo/database';
+import { db, isDatabaseConfigured } from '@chequealo/database';
 import { users, tenants } from '@chequealo/database/schema';
 import { eq } from 'drizzle-orm';
 import { createId } from '@paralleldrive/cuid2';
@@ -33,6 +33,7 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
+      if (!isDatabaseConfigured) return true;
 
       // Upsert user and default tenant on first sign-in
       const existing = await db.query.users.findFirst({
@@ -57,6 +58,12 @@ export const authConfig: NextAuthConfig = {
       return true;
     },
     async session({ session, token }) {
+      if (!isDatabaseConfigured) {
+        session.user.id = token.sub ?? session.user.email ?? 'anonymous';
+        session.user.tenantId = 'public';
+        return session;
+      }
+
       if (session.user?.email) {
         const dbUser = await db.query.users.findFirst({
           where: eq(users.email, session.user.email),

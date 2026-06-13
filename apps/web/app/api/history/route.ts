@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/shared/lib/auth';
-import { db } from '@chequealo/database';
+import { db, isDatabaseConfigured } from '@chequealo/database';
 import { verifications } from '@chequealo/database/schema';
-import { eq, and, desc } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -14,6 +14,10 @@ export async function GET(request: NextRequest) {
   const page = Number(searchParams.get('page') ?? '1');
   const limit = Number(searchParams.get('limit') ?? '20');
   const offset = (page - 1) * limit;
+
+  if (!isDatabaseConfigured) {
+    return NextResponse.json({ data: [], page, limit, databaseDisabled: true });
+  }
 
   const results = await db
     .select()

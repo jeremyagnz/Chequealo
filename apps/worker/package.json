@@ -9,11 +9,11 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@chequealo/ai-providers": "workspace:*",
-    "@chequealo/credibility-engine": "workspace:*",
-    "@chequealo/database": "workspace:*",
-    "@chequealo/search-engine": "workspace:*",
-    "@chequealo/shared-types": "workspace:*",
+    "@chequealo/ai-providers": "0.1.0",
+    "@chequealo/credibility-engine": "0.1.0",
+    "@chequealo/database": "0.1.0",
+    "@chequealo/search-engine": "0.1.0",
+    "@chequealo/shared-types": "0.1.0",
     "bullmq": "^5.7.0",
     "ioredis": "^5.4.1"
   },

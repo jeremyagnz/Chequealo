@@ -1,15 +1,15 @@
 # ─── Netlify configuration ─────────────────────────────────────────────────
-# Deploys apps/web (Next.js 14) from the Turborepo + pnpm monorepo.
+# Deploys apps/web (Next.js 14) from the Turborepo monorepo with npm workspaces.
 
 [build]
-  # Run from the repo root so pnpm workspace symlinks resolve correctly.
+  # Run from the repo root so npm workspaces and Turbo can resolve local packages.
   base    = "."
-  command = "pnpm turbo run build --filter=@chequealo/web..."
+  command = "npm run build -- --filter=@chequealo/web..."
   publish = "apps/web/.next"
 
 [build.environment]
   NODE_VERSION              = "20"
-  PNPM_VERSION              = "9.4.0"
+  NPM_VERSION               = "11.13.0"
   TURBO_TELEMETRY_DISABLED  = "1"
   # Turborepo remote cache (optional — set in Netlify UI).
   # TURBO_TOKEN  = ""

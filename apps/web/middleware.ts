@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { auth } from '@/shared/lib/auth';
-import { db } from '@chequealo/database';
+import { db, isDatabaseConfigured } from '@chequealo/database';
 import { tenants } from '@chequealo/database/schema';
 import { eq } from 'drizzle-orm';
 
@@ -14,6 +13,10 @@ export async function middleware(request: NextRequest) {
   const isSubdomain = subdomain !== hostname && subdomain !== 'www';
 
   if (isSubdomain) {
+    if (!isDatabaseConfigured) {
+      return NextResponse.next();
+    }
+
     const tenant = await db.query.tenants.findFirst({
       where: eq(tenants.slug, subdomain),
     });

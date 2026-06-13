@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/shared/lib/auth';
-import { db } from '@chequealo/database';
+import { db, isDatabaseConfigured } from '@chequealo/database';
 import { verifications } from '@chequealo/database/schema';
 import { eq, and } from 'drizzle-orm';
 
@@ -11,6 +11,10 @@ export async function GET(
   const session = await auth();
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!isDatabaseConfigured) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
   const record = await db.query.verifications.findFirst({
@@ -34,6 +38,10 @@ export async function DELETE(
   const session = await auth();
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!isDatabaseConfigured) {
+    return NextResponse.json({ success: true, databaseDisabled: true });
   }
 
   await db

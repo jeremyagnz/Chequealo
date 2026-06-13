@@ -15,7 +15,7 @@
 | AI Providers | OpenAI, Anthropic, Gemini, Groq |
 | Search | Serper, Brave Search, Tavily |
 | Auth | Auth.js (NextAuth v5) |
-| Monorepo | Turborepo + pnpm workspaces |
+| Monorepo | Turborepo + npm workspaces |
 | Deployment | Docker (Vercel + Railway/Fly.io) |
 
 ---
@@ -38,7 +38,7 @@ chequealo-ai/
 │   ├── docker/                  # Dockerfiles (web, worker)
 │   └── docker-compose.yml
 ├── turbo.json
-├── pnpm-workspace.yaml
+├── package-lock.json
 └── .env.example
 ```
 
@@ -49,7 +49,7 @@ chequealo-ai/
 ### Prerequisites
 
 - Node.js ≥ 20
-- pnpm ≥ 9
+- npm ≥ 10
 - Docker & Docker Compose (for local Postgres + Redis)
 
 ### 1. Clone and install
@@ -57,7 +57,7 @@ chequealo-ai/
 ```bash
 git clone https://github.com/jeremyagnz/Chequealo.git
 cd Chequealo
-pnpm install
+npm install
 ```
 
 ### 2. Configure environment
@@ -76,15 +76,14 @@ docker compose -f infra/docker-compose.yml up postgres redis -d
 ### 4. Run database migrations
 
 ```bash
-cd packages/database
-pnpm drizzle-kit push
+npm exec --workspace @chequealo/database drizzle-kit push
 ```
 
 ### 5. Start development
 
 ```bash
 # From the root — starts web + worker in parallel
-pnpm dev
+npm run dev
 ```
 
 The web app runs on **http://localhost:3000**.
@@ -138,4 +137,3 @@ features/verification/
 1. Create a branch from `main`
 2. Make small, focused changes
 3. Open a Pull Request with a clear description
-

@@ -111,11 +111,15 @@ export class CreateVerification {
           updatedAt: new Date(),
         })
         .where(eq(verifications.id, input.verificationId));
-    } catch {
-      await db
-        .update(verifications)
-        .set({ status: 'failed', updatedAt: new Date() })
-        .where(eq(verifications.id, input.verificationId));
+    } catch (err) {
+      try {
+        await db
+          .update(verifications)
+          .set({ status: 'failed', updatedAt: new Date() })
+          .where(eq(verifications.id, input.verificationId));
+      } catch {
+        // Ignore: if we can't mark it failed, there's nothing actionable to do here.
+      }
     }
   }
 

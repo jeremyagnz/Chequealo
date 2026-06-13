@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/shared/lib/auth';
 import { isDatabaseConfigured } from '@/lib/database';
 import { CreateVerification } from '../../application/use-cases/CreateVerification';
+import type { Session } from 'next-auth';
 
 const createVerification = new CreateVerification();
 
-export async function verifyHandler(request: NextRequest): Promise<NextResponse> {
-  const session = await auth();
+export async function verifyHandler(
+  request: NextRequest,
+  sessionOverride?: Session | null,
+): Promise<NextResponse> {
+  const session = sessionOverride ?? await auth();
   if (!session?.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

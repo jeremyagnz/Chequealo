@@ -200,7 +200,7 @@ export function VerifyForm() {
   const fetchResult = useCallback(
     async (id: string): Promise<boolean> => {
       try {
-        const res = await fetch(`/api/verify/${id}`);
+        const res = await fetch(`/api/verify/${id}`, { credentials: 'include' });
         if (!res.ok) return false;
         const data = (await res.json()) as VerificationResult;
         if (data.status === 'completed' || data.status === 'failed') {
@@ -248,10 +248,16 @@ export function VerifyForm() {
       const res = await fetch('/api/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ claim }),
       });
 
-      if (!res.ok) throw new Error('Failed to submit claim. Please try again.');
+      if (!res.ok) {
+        if (res.status === 401) {
+          throw new Error('Your session expired. Please sign in again.');
+        }
+        throw new Error('Failed to submit claim. Please try again.');
+      }
 
       const data = (await res.json()) as { jobId: string };
       setJobId(data.jobId);

@@ -1,4 +1,6 @@
-import { auth } from '@/shared/lib/auth';
+import { NextRequest } from 'next/server';
 import { verifyHandler } from '@/features/verification/presentation/api/verify.handler';
 
-export const POST = auth((request) => verifyHandler(request, request.auth));
+export async function POST(request: NextRequest) {
+  return verifyHandler(request);
+}

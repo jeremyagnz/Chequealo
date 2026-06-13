@@ -1,0 +1,19 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@chequealo/database';
+import { verifications } from '@chequealo/database/schema';
+import { eq } from 'drizzle-orm';
+
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: { jobId: string } },
+) {
+  const verification = await db.query.verifications.findFirst({
+    where: eq(verifications.id, params.jobId),
+  });
+
+  if (!verification) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
+  return NextResponse.json(verification);
+}

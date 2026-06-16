@@ -1,14 +1,14 @@
 import { HeroSection } from '@/features/landing/components/HeroSection';
+import { DemoSection } from '@/features/landing/components/DemoSection';
 import { FeaturesSection } from '@/features/landing/components/FeaturesSection';
-import { HowItWorksSection } from '@/features/landing/components/HowItWorksSection';
 import { CTASection } from '@/features/landing/components/CTASection';
 
 export default function LandingPage() {
   return (
     <main>
       <HeroSection />
+      <DemoSection />
       <FeaturesSection />
-      <HowItWorksSection />
       <CTASection />
     </main>
   );
